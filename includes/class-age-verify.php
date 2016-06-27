@@ -58,7 +58,7 @@ final class Age_Verify {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'age-verify' ), self::VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'age-verify' ), self::VERSION );
 	}
 
 	/**
@@ -69,7 +69,7 @@ final class Age_Verify {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'age-verify' ), self::VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'age-verify' ), self::VERSION );
 	}
 
 	/**
@@ -200,11 +200,11 @@ final class Age_Verify {
 		<style type="text/css">
 
 			#av-overlay-wrap {
-				background: #<?php echo esc_attr( av_get_background_color() ); ?>;
+				background: #<?php echo sanitize_hex_color_no_hash( av_get_background_color() ); ?>;
 			}
 
 			#av-overlay {
-				background: #<?php echo esc_attr( av_get_overlay_color() ); ?>;
+				background: #<?php echo sanitize_hex_color_no_hash( av_get_overlay_color() ); ?>;
 			}
 
 		</style>
@@ -238,7 +238,7 @@ final class Age_Verify {
 
 			<div id="av-overlay">
 
-				<h1><?php esc_html_e( av_get_the_heading() ); ?></h1>
+				<h1><?php echo esc_html( av_get_the_heading() ); ?></h1>
 
 				<?php if ( av_get_the_desc() )
 					echo '<p>' . esc_html( av_get_the_desc() ). '</p>'; ?>
@@ -278,7 +278,7 @@ final class Age_Verify {
 			return $content;
 		}
 
-		return sprintf( apply_filters( 'av_restricted_content_message', __( 'You must be %1s years old to view this content.', 'age-verify' ) . ' <a href="%2s">' . __( 'Please verify your age', 'age-verify' ) . '</a>.' ),
+		return sprintf( apply_filters( 'av_restricted_content_message', esc_html__( 'You must be %1s years old to view this content.', 'age-verify' ) . ' <a href="%2s">' . __( 'Please verify your age', 'age-verify' ) . '</a>.' ),
 			esc_html( av_get_minimum_age() ),
 			esc_url( get_permalink( get_the_ID() ) )
 		);
@@ -308,8 +308,8 @@ final class Age_Verify {
 
 
 			case 'checkbox' :
-
-				if ( isset( $_POST['av_verify_confirm'] ) && (int) $_POST['av_verify_confirm'] == 1 )
+				$av_verify_confirm = filter_input( INPUT_POST, 'av_verify_confirm', FILTER_SANITIZE_NUMBER_INT );
+				if ( 1 === $av_verify_confirm )
 					$is_verified = true;
 				else
 					$error = 2; // Didn't check the box
@@ -318,9 +318,13 @@ final class Age_Verify {
 
 			default :
 
-				if ( checkdate( (int) $_POST['av_verify_m'], (int) $_POST['av_verify_d'], (int) $_POST['av_verify_y'] ) ) :
+				$av_verify_m = filter_input( INPUT_POST, 'av_verify_m', FILTER_SANITIZE_NUMBER_INT );
+				$av_verify_d = filter_input( INPUT_POST, 'av_verify_d', FILTER_SANITIZE_NUMBER_INT );
+				$av_verify_y = filter_input( INPUT_POST, 'av_verify_y', FILTER_SANITIZE_NUMBER_INT );
 
-					$age = av_get_visitor_age( $_POST['av_verify_y'], $_POST['av_verify_m'], $_POST['av_verify_d'] );
+				if ( checkdate( $av_verify_m, $av_verify_d, $av_verify_y ) ) :
+
+					$age = av_get_visitor_age( $av_verify_y, $av_verify_m, $av_verify_d );
 
 				    if ( $age >= av_get_minimum_age() )
 						$is_verified = true;
@@ -349,7 +353,7 @@ final class Age_Verify {
 
 			setcookie( 'age-verified', 1, $cookie_duration, COOKIEPATH, COOKIE_DOMAIN, false );
 
-			wp_redirect( esc_url_raw( $redirect_url ) . '?age-verified=' . wp_create_nonce( 'age-verified' ) );
+			wp_redirect( esc_url_raw( $redirect_url  . '?age-verified=' . wp_create_nonce( 'age-verified' ) ) );
 			exit;
 
 		else :

@@ -51,7 +51,7 @@ final class Age_Verify_Admin {
 	 * @return void
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'age-verify' ), Age_Verify::VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'age-verify' ), Age_Verify::VERSION );
 	}
 
 	/**
@@ -62,7 +62,7 @@ final class Age_Verify_Admin {
 	 * @return void
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'age-verify' ), Age_Verify::VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'age-verify' ), Age_Verify::VERSION );
 	}
 
 	/**
@@ -113,8 +113,8 @@ final class Age_Verify_Admin {
 	public function add_settings_page() {
 
 		add_options_page (
-			__( 'Age Verify', 'age-verify' ),
-			__( 'Age Verify', 'age-verify' ),
+			esc_html__( 'Age Verify', 'age-verify' ),
+			esc_html__( 'Age Verify', 'age-verify' ),
 			'manage_options',
 			'age-verify',
 			'av_settings_page'
@@ -134,49 +134,49 @@ final class Age_Verify_Admin {
 		add_settings_section( 'av_settings_general', null, 'av_settings_callback_section_general', 'age-verify' );
 
 	 	// What to protect (entire site or specific content)
-		add_settings_field( '_av_require_for', __( 'Require verification for', 'age-verify' ), 'av_settings_callback_require_for_field', 'age-verify', 'av_settings_general' );
+		add_settings_field( '_av_require_for', esc_html__( 'Require verification for', 'age-verify' ), 'av_settings_callback_require_for_field', 'age-verify', 'av_settings_general' );
 	 	register_setting  ( 'age-verify', '_av_require_for', 'esc_attr' );
 
 	 	// Who to verify (logged in or all)
-		add_settings_field( '_av_always_verify', __( 'Verify the age of', 'age-verify' ), 'av_settings_callback_always_verify_field', 'age-verify', 'av_settings_general' );
+		add_settings_field( '_av_always_verify', esc_html__( 'Verify the age of', 'age-verify' ), 'av_settings_callback_always_verify_field', 'age-verify', 'av_settings_general' );
 	 	register_setting  ( 'age-verify', '_av_always_verify', 'esc_attr' );
 
 	 	// Minimum Age
-		add_settings_field( '_av_minimum_age', '<label for="_av_minimum_age">' . __( 'Visitors must be', 'age-verify' ) . '</label>', 'av_settings_callback_minimum_age_field', 'age-verify', 'av_settings_general' );
+		add_settings_field( '_av_minimum_age', '<label for="_av_minimum_age">' . esc_html__( 'Visitors must be', 'age-verify' ) . '</label>', 'av_settings_callback_minimum_age_field', 'age-verify', 'av_settings_general' );
 	 	register_setting  ( 'age-verify', '_av_minimum_age', 'intval' );
 
 	 	// Memory Length
-	 	add_settings_field( '_av_cookie_duration', '<label for="_av_cookie_duration">' . __( 'Remember visitors for', 'age-verify' ) . '</label>', 'av_settings_callback_cookie_duration_field', 'age-verify', 'av_settings_general' );
+	 	add_settings_field( '_av_cookie_duration', '<label for="_av_cookie_duration">' . esc_html__( 'Remember visitors for', 'age-verify' ) . '</label>', 'av_settings_callback_cookie_duration_field', 'age-verify', 'av_settings_general' );
 	 	register_setting  ( 'age-verify', '_av_cookie_duration', 'intval' );
 
-	 	add_settings_field( '_av_membership', __( 'Membership', 'age-verify' ), 'av_settings_callback_membership_field', 'age-verify', 'av_settings_general' );
+	 	add_settings_field( '_av_membership', esc_html__( 'Membership', 'age-verify' ), 'av_settings_callback_membership_field', 'age-verify', 'av_settings_general' );
 	 	register_setting  ( 'age-verify', '_av_membership', 'intval' );
 
 	 	/* Display Section */
-	 	add_settings_section( 'av_settings_display', __( 'Display Options', 'age-verify' ), 'av_settings_callback_section_display', 'age-verify' );
+	 	add_settings_section( 'av_settings_display', esc_html__( 'Display Options', 'age-verify' ), 'av_settings_callback_section_display', 'age-verify' );
 
 	 	// Heading
-	 	add_settings_field( '_av_heading', '<label for="_av_heading">' . __( 'Overlay Heading', 'age-verify' ) . '</label>', 'av_settings_callback_heading_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_heading', '<label for="_av_heading">' . esc_html__( 'Overlay Heading', 'age-verify' ) . '</label>', 'av_settings_callback_heading_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_heading', 'esc_attr' );
 
 	 	// Description
-	 	add_settings_field( '_av_description', '<label for="_av_description">' . __( 'Overlay Description', 'age-verify' ) . '</label>', 'av_settings_callback_description_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_description', '<label for="_av_description">' . esc_html__( 'Overlay Description', 'age-verify' ) . '</label>', 'av_settings_callback_description_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_description', 'esc_attr' );
 
 	 	// Input Type
-	 	add_settings_field( '_av_input_type', '<label for="_av_input_type">' . __( 'Verify ages using', 'age-verify' ) . '</label>', 'av_settings_callback_input_type_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_input_type', '<label for="_av_input_type">' . esc_html__( 'Verify ages using', 'age-verify' ) . '</label>', 'av_settings_callback_input_type_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_input_type', 'esc_attr' );
 
 	 	// Enable CSS
-	 	add_settings_field( '_av_styling', __( 'Styling', 'age-verify' ), 'av_settings_callback_styling_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_styling', esc_html__( 'Styling', 'age-verify' ), 'av_settings_callback_styling_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_styling', 'intval' );
 
 	 	// Overlay Color
-	 	add_settings_field( '_av_overlay_color', __( 'Overlay Color', 'age-verify' ), 'av_settings_callback_overlay_color_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_overlay_color', esc_html__( 'Overlay Color', 'age-verify' ), 'av_settings_callback_overlay_color_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_overlay_color', array( $this, 'validate_color' ) );
 
 	 	// Background Color
-	 	add_settings_field( '_av_bgcolor', __( 'Background Color', 'age-verify' ), 'av_settings_callback_bgcolor_field', 'age-verify', 'av_settings_display' );
+	 	add_settings_field( '_av_bgcolor', esc_html__( 'Background Color', 'age-verify' ), 'av_settings_callback_bgcolor_field', 'age-verify', 'av_settings_display' );
 	 	register_setting  ( 'age-verify', '_av_bgcolor', array( $this, 'validate_color' ) );
 
 		do_action( 'av_register_settings' );
@@ -287,7 +287,7 @@ final class Age_Verify_Admin {
 			return;
 		}
 
-		$needs_verify = ( isset( $_POST['_av_needs_verify'] ) ) ? (int) $_POST['_av_needs_verify'] : 0;
+		$needs_verify = filter_input( INPUT_POST, '_av_needs_verify', FILTER_SANITIZE_NUMBER_INT );
 
 		update_post_meta( $post_id, '_av_needs_verify', $needs_verify );
 	}

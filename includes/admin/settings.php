@@ -243,7 +243,7 @@ function av_settings_callback_bgcolor_field() { ?>
 		if ( current_theme_supports( 'custom-background', 'default-color' ) )
 			$default_color = ' data-default-color="#' . esc_attr( get_theme_support( 'custom-background', 'default-color' ) ) . '"'; ?>
 			
-		<input type="text" name="_av_bgcolor" id="_av_bgcolor" value="#<?php echo esc_attr( av_get_background_color() ); ?>"<?php echo $default_color ?> />
+		<input type="text" name="_av_bgcolor" id="_av_bgcolor" value="#<?php echo esc_attr( av_get_background_color() ); ?>"<?php echo esc_html( $default_color ) ?> />
 		
 	</fieldset>
 	

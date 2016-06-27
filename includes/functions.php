@@ -233,7 +233,7 @@ function av_the_heading() {
  */
 function av_get_the_heading() {
 	
-	return sprintf( apply_filters( 'av_heading', get_option( '_av_heading', __( 'You must be %s years old to visit this site.', 'age-verify' ) ) ), av_get_minimum_age() );
+	return sprintf( apply_filters( 'av_heading', get_option( '_av_heading', esc_html__( 'You must be %s years old to visit this site.', 'age-verify' ) ) ), av_get_minimum_age() );
 }
 
 /**
@@ -256,7 +256,7 @@ function av_the_desc() {
  */
 function av_get_the_desc() {
 	
-	$desc = apply_filters( 'av_description', get_option( '_av_description', __( 'Please verify your age', 'age-verify' ) ) );
+	$desc = apply_filters( 'av_description', get_option( '_av_description', esc_html__( 'Please verify your age', 'age-verify' ) ) );
 	
 	if ( ! empty( $desc ) )
 		return $desc;
@@ -337,7 +337,7 @@ function av_get_verify_form() {
 	
 	$input_type = av_get_input_type();
 	
-	$submit_button_label = apply_filters( 'av_form_submit_label', __( 'Enter Site &raquo;', 'age-verify' ) );
+	$submit_button_label = apply_filters( 'av_form_submit_label', esc_html__( 'Enter Site &raquo;', 'age-verify' ) );
 	
 	$form = '';
 	
@@ -345,20 +345,20 @@ function av_get_verify_form() {
 	
 	
 	/* Parse the errors, if any */
-	$error = ( isset( $_GET['verify-error'] ) ) ? $_GET['verify-error'] : false;
+	$error = ( isset( $_GET['verify-error'] ) ) ? sanitize_text_field( $_GET['verify-error'] ) : false;
 	
 	if ( $error ) :
 		
 		// Catch-all error
-		$error_string = apply_filters( 'av_error_text_general', __( 'Sorry, something must have gone wrong. Please try again', 'age-verify' ) );
+		$error_string = apply_filters( 'av_error_text_general', esc_html__( 'Sorry, something must have gone wrong. Please try again', 'age-verify' ) );
 		
 		// Visitor didn't check the box (only for the simple checkbox form)
 		if ( $error == 2 )
-			$error_string = apply_filters( 'av_error_text_not_checked', __( 'Check the box to confirm your age before continuing', 'age-verify' ) );
+			$error_string = apply_filters( 'av_error_text_not_checked', esc_html__( 'Check the box to confirm your age before continuing', 'age-verify' ) );
 		
 		// Visitor isn't old enough
 		if ( $error == 3 )
-			$error_string = apply_filters( 'av_error_text_too_young', __( 'Sorry, it doesn\'t look like you\'re old enough', 'age-verify' ) );
+			$error_string = apply_filters( 'av_error_text_too_young', esc_html__( 'Sorry, it doesn\'t look like you\'re old enough', 'age-verify' ) );
 		
 		// Visitor entered an invalid date
 		if ( $error == 4 )
@@ -384,7 +384,7 @@ function av_get_verify_form() {
 					
 					$month_name = date( 'F', mktime( 0, 0, 0, $month, 1 ) );
 					
-					$form .= '<option value="' . $month . '">' . $month_name . '</option>';
+					$form .= '<option value="' . esc_attr( $month ) . '">' . esc_html( $month_name ). '</option>';
 					
 				endforeach;
 				
@@ -392,7 +392,7 @@ function av_get_verify_form() {
 				
 				foreach ( range( 1, 31 ) as $day ) :
 					
-					$form .= '<option value="' . $day . '">' . esc_html( zeroise( $day, 2 ) ) . '</option>';
+					$form .= '<option value="' . esc_attr( $day ). '">' . esc_html( zeroise( $day, 2 ) ) . '</option>';
 					
 				endforeach;
 				
@@ -402,7 +402,7 @@ function av_get_verify_form() {
 					
 					$selected = ( $year == date( 'Y' ) ) ? 'selected="selected"' : '';
 					
-					$form .= '<option value="' . $year . '" ' . $selected . '>' . $year . '</option>';
+					$form .= '<option value="' . esc_attr( $year ). '" ' . $selected . '>' . esc_html( $year ). '</option>';
 					
 				endforeach;
 				
@@ -422,7 +422,7 @@ function av_get_verify_form() {
 			
 			$form .= '<p><label for="av_verify_confirm"><input type="checkbox" name="av_verify_confirm" id="av_verify_confirm" value="1" /> ';
 			
-			$form .= esc_html( sprintf( apply_filters( 'av_confirm_text', __( 'I am at least %s years old', 'age-verify' ) ), av_get_minimum_age() ) ) . '</label></p>';
+			$form .= esc_html( sprintf( apply_filters( 'av_confirm_text', esc_html__( 'I am at least %s years old', 'age-verify' ) ), av_get_minimum_age() ) ) . '</label></p>';
 			
 			break;
 			
@@ -472,7 +472,7 @@ function av_register_form() {
 	
 	$text = '<p class="age-verify"><label for="_av_confirm_age"><input type="checkbox" name="_av_confirm_age" id="_av_confirm_age" value="1" /> ';
 	
-	$text .= esc_html( sprintf( apply_filters( 'av_registration_text', __( 'I am at least %s years old', 'age-verify' ) ), av_get_minimum_age() ) );
+	$text .= esc_html( sprintf( apply_filters( 'av_registration_text', esc_html__( 'I am at least %s years old', 'age-verify' ) ), av_get_minimum_age() ) );
 	
 	$text .= '</label></p><br />';
 	
@@ -489,5 +489,5 @@ function av_register_form() {
 function av_register_check( $login, $email, $errors ) {
 	
 	if ( ! isset( $_POST['_av_confirm_age'] ) )
-		$errors->add( 'empty_age_confirm', '<strong>ERROR</strong>: ' . apply_filters( 'av_registration_error', __( 'Please confirm your age', 'age-verify' ) ) );
+		$errors->add( 'empty_age_confirm', '<strong>ERROR</strong>: ' . apply_filters( 'av_registration_error', esc_html__( 'Please confirm your age', 'age-verify' ) ) );
 }
