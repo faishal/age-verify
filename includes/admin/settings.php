@@ -145,7 +145,7 @@ function av_settings_callback_membership_field() { ?>
  */
 function av_settings_callback_section_display() {
 	
-	echo '<p>' . esc_html__( 'These settings change the look of your overlay. You can use <code>%s</code> to display the minimum age number from the setting above.', 'age-verify' ) . '</p>';
+	echo '<p>' . esc_html__( 'These settings change the look of your overlay. You can use %s to display the minimum age number from the setting above.', 'age-verify' ) . '</p>';
 }
 
 /**

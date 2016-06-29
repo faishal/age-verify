@@ -128,6 +128,9 @@ final class Age_Verify {
 
 		}
 
+		// Maybe add helper body class.
+		add_action( 'body_class', array( $this, 'body_class' ) );
+
 		// Maybe display the overlay.
 		add_action( 'wp_footer', array( $this, 'verify_overlay' ) );
 
@@ -364,5 +367,16 @@ final class Age_Verify {
 			exit;
 
 		endif;
+	}
+
+	/**
+	 * Add body class which help for styling incase of verification required
+	 */
+	function body_class( $classes ){
+		if ( ! av_needs_verification() ) {
+			return $classes;
+		}
+
+		return array_merge( $classes, array( 'age-verifying' ) );
 	}
 }
